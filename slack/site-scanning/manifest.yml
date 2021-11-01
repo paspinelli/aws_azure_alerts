@@ -1,0 +1,14 @@
+---
+applications:
+- name: scanner-ui
+  disk_quota: 4096M
+  timeout: 180
+  services:
+    - scanner-storage
+    - scanner-es
+  memory: 256M
+  instances: 1
+  random-route: true
+  command: python3 manage.py collectstatic --noinput ; gunicorn -t 600 -b :8080 scanner_ui.wsgi
+  env:
+    DISABLE_COLLECTSTATIC: 1
